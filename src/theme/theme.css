@@ -7,6 +7,7 @@
   --theme-text-muted: #475569;
   --theme-border: #e2e8f0;
   --theme-accent: #7c3aed;
+  --theme-error: #dc2626;
 }
 
 [data-theme="dark"] {
@@ -18,15 +19,17 @@
   --theme-text-muted: #cbd5e1;
   --theme-border: #334155;
   --theme-accent: #a78bfa;
+  --theme-error: #f87171;
 }
 
 :root {
   --theme-primary: #2563eb;
   --theme-secondary: #64748b;
   --theme-surface: #ffffff;
-  --theme-surface-muted: #f1f5f9;
+  --theme-surface-muted: #f8fafc;
   --theme-text: #0f172a;
-  --theme-text-muted: #475569;
+  --theme-text-muted: #64748b;
   --theme-border: #e2e8f0;
   --theme-accent: #7c3aed;
+  --theme-error: #dc2626;
 }

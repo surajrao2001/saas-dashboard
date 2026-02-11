@@ -1,13 +1,10 @@
-import React from 'react';
-import {Navigate, Outlet} from 'react-router-dom';
-import {ROUTES} from './routePaths';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useRedux } from '../hooks/useRedux';
+import { ROUTES } from './routePaths';
 
-const PrivateRoutes: React.FC = () => {
-    const isAuthenticated = true;
+export default function PrivateRoutes() {
+  const { useSelector } = useRedux();
+  const isAuthenticated = useSelector((s) => s.auth.isAuthenticated);
 
-    const defaultPublicRoute = ROUTES.HOME;
-
-    return isAuthenticated ? <Outlet /> : <Navigate to={defaultPublicRoute} replace />;
-};
-
-export default PrivateRoutes;
+  return isAuthenticated ? <Outlet /> : <Navigate to={ROUTES.LOGIN} replace />;
+}
