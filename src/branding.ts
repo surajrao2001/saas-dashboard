@@ -22,8 +22,9 @@ export const AUTH_LEFT_PANEL = {
   ],
 } as const;
 
-export const AUTH_MESSAGES: Record<'login' | 'register' | 'forgotPassword', string> = {
+export const AUTH_MESSAGES: Record<'login' | 'register' | 'forgotPassword' | 'resetPassword', string> = {
   login: "Welcome back. Pick up where you left off.",
   register: "Join teams who ship on time. Start free—no credit card.",
   forgotPassword: "We'll get you back in seconds. Enter your email below.",
+  resetPassword: "Choose a new password. Must be at least 6 characters.",
 };

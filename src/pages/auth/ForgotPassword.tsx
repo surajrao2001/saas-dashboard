@@ -1,9 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Input, Spinner } from '@surajrao/my-ui-library';
 import { toast } from 'sonner';
+import { forgotPassword } from '../../api/auth';
 import { ROUTES } from '../../routes/routePaths';
 import { AuthLayout } from '../../components/auth/AuthLayout';
 import { AUTH_MESSAGES } from '../../branding';
@@ -15,6 +16,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export function ForgotPassword() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -25,7 +27,20 @@ export function ForgotPassword() {
   });
 
   async function onSubmit(data: FormData) {
-    toast.info(`Password reset link would be sent to ${data.email}`);
+    try {
+      const res = await forgotPassword(data.email);
+      toast.success(res.message);
+      if (res.resetLink) {
+        const token = new URL(res.resetLink).searchParams.get('token') || res.resetLink.split('token=')[1] || '';
+        if (token) navigate(`${ROUTES.RESET_PASSWORD}?token=${encodeURIComponent(token)}`);
+      }
+    } catch (err: unknown) {
+      const msg =
+        err && typeof err === 'object' && 'response' in err
+          ? (err as { response?: { data?: { error?: string } } }).response?.data?.error
+          : 'Failed to send reset link';
+      toast.error(String(msg ?? 'Failed to send reset link'));
+    }
   }
 
   return (

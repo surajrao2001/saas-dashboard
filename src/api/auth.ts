@@ -45,3 +45,27 @@ export async function refreshToken(refreshToken: string): Promise<RefreshRespons
   });
   return data;
 }
+
+export interface ForgotPasswordResponse {
+  message: string;
+  resetLink?: string;
+}
+
+export async function forgotPassword(email: string): Promise<ForgotPasswordResponse> {
+  const { data } = await axiosInstance.post<ForgotPasswordResponse>('/auth/forgot-password', {
+    email,
+  });
+  return data;
+}
+
+export interface ResetPasswordResponse {
+  message: string;
+}
+
+export async function resetPassword(token: string, password: string): Promise<ResetPasswordResponse> {
+  const { data } = await axiosInstance.post<ResetPasswordResponse>('/auth/reset-password', {
+    token,
+    password,
+  });
+  return data;
+}
